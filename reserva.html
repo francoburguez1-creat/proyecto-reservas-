@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar - SportTech</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background-color: #303030;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        width: 100%;
+        height: 70px;
+        background-color: #222222;
+        display: flex;
+        align-items: center;
+        padding: 0 50px;
+    }
+
+    .logo {
+        color: #00C853;
+        font-size: 25px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .menu {
+        margin-left: auto;
+        display: flex;
+        gap: 30px;
+    }
+
+    .menu a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .menu a:hover {
+        color: #00C853;
+    }
+
+    .contenedor {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: #222222;
+        border: 1px solid #444444;
+        border-radius: 12px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #00C853;
+        margin-bottom: 10px;
+    }
+
+    .descripcion {
+        text-align: center;
+        color: #cccccc;
+        margin-bottom: 35px;
+    }
+
+    .campo {
+        margin-bottom: 22px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 13px;
+        border-radius: 7px;
+        border: 1px solid #555555;
+        background-color: #303030;
+        color: white;
+        font-size: 16px;
+    }
+
+    input:focus,
+    select:focus {
+        outline: none;
+        border-color: #00C853;
+    }
+
+    .precio {
+        padding: 15px;
+        margin-bottom: 22px;
+        text-align: center;
+        color: #00C853;
+        background-color: #303030;
+        border: 1px solid #00C853;
+        border-radius: 7px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .boton {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        background-color: #00C853;
+        color: #111111;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .boton:hover {
+        background-color: #009624;
+        color: white;
+    }
+
+    .volver {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #03ac4a;
+        text-decoration: none;
+    }
+
+    .volver:hover {
+        color: white;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+    
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        SportTech
+    </a>
+
+    <div class="menu">
+
+        <a href="index.html">Inicio</a>
+
+        <a href="reservas.html">Mis reservas</a>
+
+        <a href="canchas.html">Canchas</a>
+
+        <a href="precios.html">Precios</a>
+
+    </div>
+
+</nav>
+
+
+<div class="contenedor">
+
+    <h1>Reservar una cancha</h1>
+
+    <p class="descripcion">
+        Completá los datos para realizar tu reserva.
+    </p>
+
+
+    <form id="formReserva">
+
+
+        <div class="campo">
+
+            <label for="nombre">
+                Nombre y apellido
+            </label>
+
+            <input
+                type="text"
+                id="nombre"
+                placeholder="Ingresá tu nombre y apellido"
+                required
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+    <label for="cedula">
+        Cédula de identidad
+    </label>
+
+    <input
+    type="text"
+    id="cedula"
+    placeholder="Ingresá tu cédula"
+    inputmode="numeric"
+    pattern="[0-9]{8}"
+    minlength="8"
+    maxlength="8"
+    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 8)"
+    required
+>
+
+</div>
+
+<div class="campo">
+
+    <label for="telefono">
+        Teléfono
+    </label>
+
+    <input
+        type="tel"
+        id="telefono"
+        placeholder="Ingresá tu teléfono"
+        inputmode="numeric"
+        pattern="[0-9]{9}"
+        minlength="9"
+        maxlength="9"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9)"
+        required
+    >
+
+</div>
+
+        <div class="campo">
+
+            <label for="fecha">
+                Fecha
+            </label>
+
+            <input
+                type="date"
+                id="fecha"
+                required
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="horario">
+                Horario
+            </label>
+
+            <select id="horario" required>
+
+                <option value="">
+                    Seleccioná un horario
+                </option>
+
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option>
+                <option value="20:00">20:00</option>
+                <option value="21:00">21:00</option>
+                <option value="22:00">22:00</option>
+                <option value="23:00">23:00</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="cancha">
+                Cancha
+            </label>
+
+            <select id="cancha" required>
+
+                <option value="">
+                    Seleccioná una cancha
+                </option>
+
+                <option value="Fútbol 5 - Cancha 1" data-precio="1500">
+                    Fútbol 5 - Cancha 1
+                </option>
+
+                <option value="Fútbol 5 - Cancha 2" data-precio="1800">
+                    Fútbol 5 - Cancha 2
+                </option>
+
+                <option value="Fútbol 5 - Cancha 3" data-precio="2000">
+                    Fútbol 5 - Cancha 3
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="precio" id="precio">
+            Precio: $0
+        </div>
+
+
+        <button type="submit" class="boton">
+            Confirmar reserva
+        </button>
+
+
+    </form>
+
+
+    <a href="index.html" class="volver">
+        Volver al inicio
+    </a>
+
+</div>
+
+
+<script>
+
+    const fecha = document.getElementById("fecha");
+    const horario = document.getElementById("horario");
+    const cancha = document.getElementById("cancha");
+    const precio = document.getElementById("precio");
+
+    const nombre = document.getElementById("nombre");
+    const cedula = document.getElementById("cedula");
+    const telefono = document.getElementById("telefono");
+
+    const formulario = document.getElementById("formReserva");
+
+
+    // No permitir fechas anteriores a hoy
+
+    const hoy = new Date();
+
+    const año = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoy.getDate()).padStart(2, "0");
+
+    fecha.min = año + "-" + mes + "-" + dia;
+
+
+    // Mostrar precio de la cancha
+
+    cancha.addEventListener("change", function() {
+
+        const opcion = cancha.options[cancha.selectedIndex];
+
+        const precioCancha =
+            opcion.getAttribute("data-precio");
+
+        if (precioCancha) {
+
+            precio.textContent =
+                "Precio: $" + precioCancha;
+
+        } else {
+
+            precio.textContent =
+                "Precio: $0";
+
+        }
+
+    });
+
+
+    // Realizar reserva
+
+    formulario.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const reservas =
+            JSON.parse(
+                localStorage.getItem("reservasSportTech")
+            ) || [];
+
+
+        const opcion =
+            cancha.options[cancha.selectedIndex];
+
+
+        const precioSeleccionado =
+            opcion.getAttribute("data-precio");
+
+
+        // Comprobar si la cancha ya está reservada
+
+        const yaReservada =
+            reservas.some(function(reserva) {
+
+                return (
+                    reserva.fecha === fecha.value &&
+                    reserva.horario === horario.value &&
+                    reserva.cancha === cancha.value
+                );
+
+            });
+
+
+        if (yaReservada) {
+
+            alert(
+                "Esta cancha ya está reservada para ese día y horario. Elegí otra cancha u otro horario."
+            );
+
+            return;
+
+        }
+
+
+        // Crear reserva
+
+        const nuevaReserva = {
+
+            nombre: nombre.value.trim(),
+
+            cedula: cedula.value.trim(),
+
+            telefono: telefono.value.trim(),
+
+            fecha: fecha.value,
+
+            horario: horario.value,
+
+            cancha: cancha.value,
+
+            precio: Number(precioSeleccionado)
+
+        };
+
+
+        // Guardar reserva
+
+        reservas.push(nuevaReserva);
+
+        localStorage.setItem(
+            "reservasSportTech",
+            JSON.stringify(reservas)
+        );
+
+
+        // Guardar última reserva
+
+        localStorage.setItem(
+            "ultimaReserva",
+            JSON.stringify(nuevaReserva)
+        );
+
+
+        alert(
+            "Reserva realizada correctamente."
+        );
+
+
+        window.location.href =
+            "index.html";
+
+    });
+
+</script>
+```
+
+</body>
+
+</html>

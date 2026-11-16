@@ -1,0 +1,682 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mis reservas - SportTech</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: #303030;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            width: 100%;
+            height: 70px;
+            background-color: #222222;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+        }
+
+        .logo {
+            color: #00C853;
+            font-size: 25px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .menu {
+            margin-left: auto;
+            display: flex;
+            gap: 30px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .menu a:hover {
+            color: #00C853;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: auto;
+            padding: 70px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00C853;
+            margin-bottom: 40px;
+        }
+
+        .reserva {
+            background-color: #222222;
+            border: 1px solid #444444;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .reserva:hover {
+            border-color: #00C853;
+        }
+
+        .reserva h2 {
+            color: #00C853;
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        .reserva p {
+            margin: 8px 0;
+        }
+
+        .sin-reservas {
+            text-align: center;
+            color: #bbbbbb;
+            font-size: 18px;
+        }
+
+        /* BOTONES */
+
+        .btn-eliminar {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .btn-eliminar:hover {
+            background-color: #a71d2a;
+        }
+
+        .btn-modificar {
+            background-color: #00C853;
+            color: #111111;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-right: 8px;
+        }
+
+        .btn-modificar:hover {
+            background-color: #009624;
+            color: white;
+        }
+
+        /* FORMULARIO DE MODIFICACIÓN */
+
+        .editar-campo {
+            margin-bottom: 18px;
+        }
+
+        .editar-campo label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .editar-campo input,
+        .editar-campo select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #555555;
+            background-color: #303030;
+            color: white;
+            font-size: 16px;
+        }
+
+        .editar-campo input:focus,
+        .editar-campo select:focus {
+            outline: none;
+            border-color: #00C853;
+        }
+
+        .precio-edicion {
+            color: #00C853;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .btn-guardar {
+            background-color: #00C853;
+            color: #111111;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-cancelar {
+            background-color: #555555;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: auto;
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .menu {
+                margin-left: 0;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+            SportTech
+        </a>
+
+        <div class="menu">
+
+            <a href="index.html">Inicio</a>
+
+            <a href="reservas.html">Mis reservas</a>
+
+            <a href="canchas.html">Canchas</a>
+
+            <a href="precios.html">Precios</a>
+
+        </div>
+
+    </nav>
+
+
+    <div class="container">
+
+        <h1>Mis reservas</h1>
+
+        <div id="listaReservas"></div>
+
+    </div>
+
+
+    <script>
+
+        const lista = document.getElementById("listaReservas");
+
+
+        // Obtener reservas guardadas
+
+        function obtenerReservas() {
+
+            return JSON.parse(
+                localStorage.getItem("reservasSportTech")
+            ) || [];
+
+        }
+
+
+        // Evitar interpretar datos como HTML
+
+        function escaparHTML(texto) {
+
+            return String(texto ?? "").replace(/[&<>"']/g, function(caracter) {
+
+                return {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;"
+                }[caracter];
+
+            });
+
+        }
+
+
+        // Mostrar reservas
+
+        function mostrarReservas() {
+
+            const reservas = obtenerReservas();
+
+            lista.innerHTML = "";
+
+
+            if (reservas.length === 0) {
+
+                lista.innerHTML =
+                    '<p class="sin-reservas">No tenés reservas realizadas.</p>';
+
+                return;
+
+            }
+
+
+            reservas.forEach(function(reserva, indice) {
+
+                const tarjeta = document.createElement("div");
+
+                tarjeta.className = "reserva";
+
+                tarjeta.innerHTML = `
+
+                    <h2>${escaparHTML(reserva.cancha)}</h2>
+
+                    <p>
+                        <strong>Nombre:</strong>
+                        ${escaparHTML(reserva.nombre)}
+                    </p>
+
+                    <p>
+                        <strong>Cédula:</strong>
+                        ${escaparHTML(reserva.cedula)}
+                    </p>
+
+                    <p>
+                        <strong>Teléfono:</strong>
+                        ${escaparHTML(reserva.telefono)}
+                    </p>
+
+                    <p>
+                        <strong>Fecha:</strong>
+                        ${escaparHTML(reserva.fecha)}
+                    </p>
+
+                    <p>
+                        <strong>Horario:</strong>
+                        ${escaparHTML(reserva.horario)}
+                    </p>
+
+                    <p>
+                        <strong>Precio:</strong>
+                        $${escaparHTML(reserva.precio)}
+                    </p>
+
+                    <button
+                        class="btn-modificar"
+                        onclick="editarReserva(${indice})">
+
+                        Modificar reserva
+
+                    </button>
+
+                    <button
+                        class="btn-eliminar"
+                        onclick="eliminarReserva(${indice})">
+
+                        Eliminar reserva
+
+                    </button>
+
+                `;
+
+                lista.appendChild(tarjeta);
+
+            });
+
+        }
+
+
+        // Eliminar una reserva
+
+        function eliminarReserva(indice) {
+
+            const confirmar = confirm(
+                "¿Estás seguro de que querés eliminar esta reserva?"
+            );
+
+            if (confirmar) {
+
+                const reservas = obtenerReservas();
+
+                reservas.splice(indice, 1);
+
+                localStorage.setItem(
+                    "reservasSportTech",
+                    JSON.stringify(reservas)
+                );
+
+                mostrarReservas();
+
+                alert("La reserva fue eliminada correctamente.");
+
+            }
+
+        }
+
+
+        // Modificar una reserva
+
+        function editarReserva(indice) {
+
+            const reservas = obtenerReservas();
+
+            const reserva = reservas[indice];
+
+            if (!reserva) return;
+
+            const tarjeta = lista.children[indice];
+
+            tarjeta.innerHTML = `
+
+                <h2>Modificar reserva</h2>
+
+                <form id="formEditar">
+
+                    <div class="editar-campo">
+
+                        <label>Nombre y apellido</label>
+
+                        <input
+                            type="text"
+                            id="editarNombre"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="editar-campo">
+
+                        <label>Cédula de identidad</label>
+
+                        <input
+                            type="text"
+                            id="editarCedula"
+                            inputmode="numeric"
+                            pattern="[0-9]{8}"
+                            minlength="8"
+                            maxlength="8"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,8)"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="editar-campo">
+
+                        <label>Teléfono</label>
+
+                        <input
+                            type="tel"
+                            id="editarTelefono"
+                            inputmode="numeric"
+                            pattern="[0-9]{9}"
+                            minlength="9"
+                            maxlength="9"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,9)"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="editar-campo">
+
+                        <label>Fecha</label>
+
+                        <input
+                            type="date"
+                            id="editarFecha"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="editar-campo">
+
+                        <label>Horario</label>
+
+                        <select id="editarHorario" required>
+
+                            <option value="">Seleccioná un horario</option>
+
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="22:00">22:00</option>
+                            <option value="23:00">23:00</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="editar-campo">
+
+                        <label>Cancha</label>
+
+                        <select id="editarCancha" required>
+
+                            <option value="">Seleccioná una cancha</option>
+
+                            <option value="Fútbol 5 - Cancha 1" data-precio="1500">
+                                Fútbol 5 - Cancha 1
+                            </option>
+
+                            <option value="Fútbol 5 - Cancha 2" data-precio="1800">
+                                Fútbol 5 - Cancha 2
+                            </option>
+
+                            <option value="Fútbol 5 - Cancha 3" data-precio="2000">
+                                Fútbol 5 - Cancha 3
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="precio-edicion" id="precioEdicion">
+                        Precio: $0
+                    </div>
+
+
+                    <button type="submit" class="btn-guardar">
+                        Guardar cambios
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-cancelar"
+                        onclick="mostrarReservas()">
+
+                        Cancelar
+
+                    </button>
+
+                </form>
+
+            `;
+
+
+            // Cargar los datos actuales
+
+            const nombre = document.getElementById("editarNombre");
+            const cedula = document.getElementById("editarCedula");
+            const telefono = document.getElementById("editarTelefono");
+            const fecha = document.getElementById("editarFecha");
+            const horario = document.getElementById("editarHorario");
+            const cancha = document.getElementById("editarCancha");
+            const precio = document.getElementById("precioEdicion");
+
+            const formulario = document.getElementById("formEditar");
+
+
+            nombre.value = reserva.nombre;
+            cedula.value = reserva.cedula;
+            telefono.value = reserva.telefono;
+            fecha.value = reserva.fecha;
+            horario.value = reserva.horario;
+            cancha.value = reserva.cancha;
+
+
+            // No permitir fechas anteriores a hoy
+
+            const hoy = new Date();
+
+            const año = hoy.getFullYear();
+            const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+            const dia = String(hoy.getDate()).padStart(2, "0");
+
+            fecha.min = año + "-" + mes + "-" + dia;
+
+
+            // Actualizar precio
+
+            function actualizarPrecio() {
+
+                const opcion = cancha.options[cancha.selectedIndex];
+
+                const valor = opcion.getAttribute("data-precio");
+
+                precio.textContent = valor
+                    ? "Precio: $" + valor
+                    : "Precio: $0";
+
+            }
+
+            cancha.addEventListener("change", actualizarPrecio);
+
+            actualizarPrecio();
+
+
+            // Guardar los cambios
+
+            formulario.addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                const reservasActuales = obtenerReservas();
+
+                const opcion = cancha.options[cancha.selectedIndex];
+
+                const precioSeleccionado =
+                    Number(opcion.getAttribute("data-precio"));
+
+
+                // Comprobar si ya existe otra reserva
+                // para esa cancha, fecha y horario
+
+                const yaReservada = reservasActuales.some(
+                    function(otraReserva, otroIndice) {
+
+                        return (
+                            otroIndice !== indice &&
+                            otraReserva.fecha === fecha.value &&
+                            otraReserva.horario === horario.value &&
+                            otraReserva.cancha === cancha.value
+                        );
+
+                    }
+                );
+
+
+                if (yaReservada) {
+
+                    alert(
+                        "Esta cancha ya está reservada para ese día y horario. Elegí otra opción."
+                    );
+
+                    return;
+
+                }
+
+
+                // Crear reserva modificada
+
+                const reservaModificada = {
+
+                    nombre: nombre.value.trim(),
+
+                    cedula: cedula.value.trim(),
+
+                    telefono: telefono.value.trim(),
+
+                    fecha: fecha.value,
+
+                    horario: horario.value,
+
+                    cancha: cancha.value,
+
+                    precio: precioSeleccionado
+
+                };
+
+
+                // Guardar los cambios
+
+                reservasActuales[indice] = reservaModificada;
+
+                localStorage.setItem(
+                    "reservasSportTech",
+                    JSON.stringify(reservasActuales)
+                );
+
+
+                alert("La reserva fue modificada correctamente.");
+
+                mostrarReservas();
+
+            });
+
+        }
+
+
+        // Mostrar reservas al abrir la página
+
+        mostrarReservas();
+
+    </script>
+
+
+</body>
+
+</html>
+```

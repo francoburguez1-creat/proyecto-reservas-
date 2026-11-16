@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportTech</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: #303030;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            width: 100%;
+            height: 70px;
+            background-color: #222222;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            color: #00C853;
+            font-size: 25px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .menu {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .menu a:hover {
+            color: #00C853;
+        }
+
+
+        /* FONDO CON LA FOTO */
+
+        .hero {
+            height: 560px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-foto-1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            background-image: url("../img/cancha.jpeg");
+            background-size: cover;
+            background-position: center 45%;
+
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: rgba(0, 0, 0, 0.55);
+
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+
+            max-width: 850px;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin: 0 0 15px 0;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+
+        /* BOTON RESERVAR */
+
+        .btn-reservar {
+            display: inline-block;
+
+            background-color: #00C853;
+            color: #111111;
+
+            padding: 13px 28px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .btn-reservar:hover {
+            background-color: #009624;
+            color: white;
+        }
+
+
+        /* SECCIONES */
+
+        .section {
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .section h2 {
+            color: #00C853;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .section p {
+            text-align: center;
+            line-height: 1.7;
+        }
+
+
+        /* TARJETAS */
+
+        .cards {
+            display: flex;
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .card {
+            flex: 1;
+
+            background-color: #222222;
+
+            border: 1px solid #444444;
+            border-radius: 10px;
+
+            padding: 30px 20px;
+
+            text-align: center;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: #00C853;
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            color: #00C853;
+            margin-bottom: 15px;
+        }
+
+
+        /* FINAL */
+
+        .final {
+            background-color: #252525;
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .final h2 {
+            color: #00C853;
+            margin-bottom: 15px;
+        }
+
+
+        /* CONTACTO */
+
+        .contacto {
+            position: fixed;
+
+            bottom: 20px;
+            left: 20px;
+
+            background-color: #00C853;
+            color: #111111;
+
+            padding: 12px 20px;
+
+            border-radius: 30px;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+
+            transition: 0.3s;
+
+            z-index: 1000;
+        }
+
+        .contacto:hover {
+            transform: translateY(-5px);
+
+            background-color: #009624;
+            color: white;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            background-color: #222222;
+
+            text-align: center;
+
+            padding: 20px;
+
+            color: #bbbbbb;
+        }
+
+
+        /* CELULAR */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: auto;
+
+                padding: 20px;
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            .menu {
+                margin-left: 0;
+
+                gap: 15px;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+            .hero {
+                height: 600px;
+            }
+
+            .hero-foto-1 {
+                width: 100%;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .cards {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+            SportTech
+        </a>
+
+        <div class="menu">
+
+            <a href="index.html">
+                Inicio
+            </a>
+
+            <a href="reservas.html">
+                Mis reservas
+            </a>
+
+            <a href="canchas.html">
+                Canchas
+            </a>
+
+            <a href="precios.html">
+                Precios
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <section class="hero">
+
+        <div class="hero-foto-1"></div>
+
+        <div class="hero-overlay"></div>
+
+
+        <div class="hero-content">
+
+            <h1>
+                Bienvenido a SportTech
+            </h1>
+
+            <p>
+                Reservá tu cancha de fútbol de forma rápida,
+                sencilla y segura.
+            </p>
+
+            <a href="reserva.html" class="btn-reservar">
+                Reservar una cancha
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="container">
+
+            <h2>
+                Sobre nuestra empresa de paginas web
+            </h2>
+
+            <p>
+                En SportTech buscamos facilitar la organización
+                de tus partidos ofreciendo un sistema simple y
+                rápido para consultar las canchas, conocer los
+                precios y realizar reservas.
+            </p>
+
+            <p>
+                Nuestra plataforma permite gestionar las reservas
+                de manera organizada para que puedas concentrarte
+                en lo más importante: jugar.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="container">
+
+            <h2>
+                ¿Qué ofrecemos?
+            </h2>
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>
+                        Canchas
+                    </h3>
+
+                    <p>
+                        Conocé nuestras canchas de fútbol y elegí
+                        la que mejor se adapte a tu partido.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Reservas
+                    </h3>
+
+                    <p>
+                        Realizá tu reserva de forma rápida y
+                        consultá tus reservas cuando quieras.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Precios
+                    </h3>
+
+                    <p>
+                        Consultá los precios de cada cancha
+                        antes de realizar tu reserva.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="final">
+
+        <h2>
+            ¿Listo para reservar?
+        </h2>
+
+        <p>
+            Elegí tu cancha, reservá tu horario y disfrutá del partido.
+        </p>
+
+    </section>
+
+
+    <a href="contacto.html" class="contacto">
+        Contacto
+    </a>
+
+
+    <footer>
+        SportTech - Reservas simples, gestión inteligente.
+    </footer>
+
+
+</body>
+
+</html>
